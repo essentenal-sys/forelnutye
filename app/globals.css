@@ -66,3 +66,29 @@ button:active, a:active {
 .page-transition {
   animation: page-in 0.35s ease forwards;
 }
+
+/* ── Рыба: плавание влево-вправо ── */
+
+.trout-swim-lr {
+  animation: swimLR 5s ease-in-out infinite;
+}
+
+@keyframes swimLR {
+  0%   { transform: translateX(0)     rotate(0deg); }
+  25%  { transform: translateX(28px)  rotate(1.5deg); }
+  50%  { transform: translateX(0)     rotate(0deg); }
+  75%  { transform: translateX(-28px) rotate(-1.5deg); }
+  100% { transform: translateX(0)     rotate(0deg); }
+}
+
+.trout-canvas {
+  width: 100%;
+  mask-image: radial-gradient(ellipse 90% 80% at 44% 50%, black 35%, rgba(0,0,0,0.72) 57%, transparent 76%);
+  -webkit-mask-image: radial-gradient(ellipse 90% 80% at 44% 50%, black 35%, rgba(0,0,0,0.72) 57%, transparent 76%);
+  animation: fishShimmer 2.5s ease-in-out infinite;
+}
+
+@keyframes fishShimmer {
+  0%, 100% { filter: drop-shadow(0 0 50px rgba(20,150,90,0.45)) brightness(1)    saturate(1); }
+  50%       { filter: drop-shadow(0 0 80px rgba(20,150,90,0.65)) brightness(1.14) saturate(1.22); }
+}
