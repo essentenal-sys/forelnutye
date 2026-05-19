@@ -1,3 +1,14 @@
+@font-face {
+  font-family: "Snowstorm";
+  src: url("/fonts/Snowstorm.otf") format("opentype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+.font-title {
+  font-family: "Snowstorm", sans-serif;
+}
+
 @import "tailwindcss";
 
 :root {
@@ -20,7 +31,38 @@
 }
 
 body {
-  background: var(--background);
+  background-color: #000;
+  background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('/site-bg.jpg');
+  background-size: cover;
+  background-attachment: scroll;
+  background-position: center top;
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+}
+
+.font-title {
+  font-family: "Snowstorm", sans-serif;
+  letter-spacing: 1px;
+}
+
+button, a {
+  transition: transform 0.12s ease, opacity 0.12s ease;
+}
+button:active, a:active {
+  transform: scale(0.93);
+  opacity: 0.85;
+}
+
+@keyframes page-in {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.page-transition {
+  animation: page-in 0.35s ease forwards;
 }
