@@ -2,6 +2,7 @@ export const PRICE = 250;
 
 export const products = [
   {
+    slug: "magot",
     name: "Магот",
     items: [
       { name: "Оранжевый", image: "/worms.jpg" },
@@ -10,6 +11,7 @@ export const products = [
     ],
   },
   {
+    slug: "dzhunior",
     name: "Джуниор",
     items: [
       { name: "Жёлтый", image: "/worms.jpg" },
@@ -17,6 +19,7 @@ export const products = [
     ],
   },
   {
+    slug: "bobr",
     name: "Бобриный хвост",
     items: [
       { name: "Чёрный", image: "/worms.jpg" },
@@ -24,6 +27,7 @@ export const products = [
     ],
   },
   {
+    slug: "plamp",
     name: "Пламп",
     items: [
       { name: "Фиолетовый", image: "/worms.jpg" },
