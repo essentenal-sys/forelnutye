@@ -45,9 +45,9 @@ export default function ProductModal({ product, onClose }: { product: any; onClo
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-black/70" onClick={onClose}>
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4" onClick={onClose}>
       <div
-        className="bg-zinc-900/60 backdrop-blur-md w-full max-w-lg rounded-t-2xl sm:rounded-2xl overflow-hidden flex flex-col max-h-[90vh]"
+        className="bg-zinc-900/60 backdrop-blur-md w-full max-w-lg rounded-2xl overflow-hidden flex flex-col max-h-[90vh]"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="relative flex-shrink-0">
