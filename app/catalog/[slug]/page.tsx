@@ -44,13 +44,13 @@ export default function ProductPage({ params }: { params: Promise<{ slug: string
 
   return (
     <div style={{ minHeight: "100vh", background: "#111" }}>
-      {/* Фото на всю ширину с отступом под навбар */}
-      <div className="relative w-full" style={{ paddingTop: "64px" }}>
+      {/* Фото */}
+      <div className="relative w-full" style={{ paddingTop: "64px", maxHeight: "420px", overflow: "hidden" }}>
         <img
           src={selected.image}
           alt={product.name}
           className="w-full object-cover transition duration-300"
-          style={{ height: "300px" }}
+          style={{ height: "340px", maxHeight: "340px" }}
         />
         <button
           onClick={() => router.back()}
@@ -107,20 +107,18 @@ export default function ProductPage({ params }: { params: Promise<{ slug: string
             <span style={{ color: "#fff", fontSize: "2rem", fontWeight: 700 }}>
               {PRICE * qty} ₽
             </span>
-            <div style={{ display: "flex", alignItems: "center", gap: "16px" }}>
-              {[["−", () => setQty(q => Math.max(1, q - 1))], ["+", () => setQty(q => q + 1)]].map(([label, fn], i) => (
-                <button key={i} onClick={fn as () => void}
-                  style={{
-                    width: "40px", height: "40px", borderRadius: "50%",
-                    background: "rgba(255,255,255,0.1)", color: "#fff",
-                    fontSize: "20px", border: "none", cursor: "pointer",
-                    display: "flex", alignItems: "center", justifyContent: "center",
-                  }}
-                >{label as string}</button>
-              ))}
-              <span style={{ color: "#fff", fontSize: "18px", fontWeight: 600, minWidth: "20px", textAlign: "center" }}>
+            <div style={{ display: "flex", alignItems: "center", gap: "14px" }}>
+              <button onClick={() => setQty(q => Math.max(1, q - 1))}
+                style={{ width: "40px", height: "40px", borderRadius: "50%", background: "rgba(255,255,255,0.1)", color: "#fff", fontSize: "20px", border: "none", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                −
+              </button>
+              <span style={{ color: "#fff", fontSize: "18px", fontWeight: 600, minWidth: "24px", textAlign: "center" }}>
                 {qty}
               </span>
+              <button onClick={() => setQty(q => q + 1)}
+                style={{ width: "40px", height: "40px", borderRadius: "50%", background: "rgba(255,255,255,0.1)", color: "#fff", fontSize: "20px", border: "none", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                +
+              </button>
             </div>
           </div>
 
