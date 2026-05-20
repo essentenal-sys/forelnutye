@@ -3,7 +3,9 @@
 import { useCart } from "@/app/context/cart";
 
 export default function CartButton() {
-  const { totalQty, setCartOpen, cartRef } = useCart();
+  const { totalQty, setCartOpen, cartOpen, cartRef } = useCart();
+
+  if (cartOpen) return null;
 
   return (
     <button
