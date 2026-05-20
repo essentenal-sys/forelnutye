@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { use, useState } from "react";
 import { useRouter } from "next/navigation";
 import { products, PRICE } from "@/app/lib/data";
 import { useCart } from "@/app/context/cart";
@@ -16,10 +16,11 @@ const colorMap: Record<string, string> = {
   "Фиолетовый": "#a855f7",
 };
 
-export default function ProductPage({ params }: { params: { slug: string } }) {
+export default function ProductPage({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = use(params);
   const router = useRouter();
   const { addToCart } = useCart();
-  const product = products.find((p) => p.slug === params.slug);
+  const product = products.find((p) => p.slug === slug);
 
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [qty, setQty] = useState(1);
