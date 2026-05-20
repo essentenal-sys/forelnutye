@@ -1,5 +1,3 @@
-import SwimmingFish from "@/app/components/SwimmingFish";
-
 export default function Home() {
   return (
     <main className="text-white">
@@ -31,9 +29,13 @@ export default function Home() {
           </a>
         </div>
 
-        {/* Рыба — под текстом, плавает влево-вправо */}
-        <div className="trout-swim-lr w-[95vw] md:w-[78vw] max-w-[680px]">
-          <SwimmingFish />
+        {/* Рыба */}
+        <div className="fish-swim-lr w-[95vw] md:w-[78vw] max-w-[680px]">
+          <img
+            src="/trout.png"
+            alt="форель"
+            className="fish-img w-full"
+          />
         </div>
 
       </section>
