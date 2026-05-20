@@ -98,6 +98,6 @@ button:active, a:active {
 }
 
 @keyframes fishShimmer {
-  0%, 100% { filter: drop-shadow(0 0 40px rgba(20,140,80,0.5)) brightness(1)    saturate(1); }
-  50%       { filter: drop-shadow(0 0 65px rgba(20,140,80,0.7)) brightness(1.12) saturate(1.18); }
+  0%, 100% { filter: brightness(1)    saturate(1); }
+  50%       { filter: brightness(1.1) saturate(1.15); }
 }
