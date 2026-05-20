@@ -10,7 +10,7 @@ const colorMap: Record<string, string> = {
   "Зелёный": "#22c55e",
   "Розовый": "#ec4899",
   "Жёлтый": "#fbbf24",
-  "Белый": "#f1f5f9",
+  "Белый": "#e2e8f0",
   "Чёрный": "#1c1c1e",
   "Красный": "#ef4444",
   "Фиолетовый": "#a855f7",
@@ -28,7 +28,7 @@ export default function ProductPage({ params }: { params: Promise<{ slug: string
 
   if (!product) {
     return (
-      <main className="text-white pt-24 px-6 text-center">
+      <main className="text-white pt-32 px-6 text-center">
         <p>Товар не найден</p>
       </main>
     );
@@ -43,78 +43,108 @@ export default function ProductPage({ params }: { params: Promise<{ slug: string
   };
 
   return (
-    <main className="text-white min-h-screen">
-      {/* Фото */}
-      <div className="relative w-full h-72 md:h-96">
+    <div style={{ minHeight: "100vh", background: "#111" }}>
+      {/* Фото на всю ширину с отступом под навбар */}
+      <div className="relative w-full" style={{ paddingTop: "64px" }}>
         <img
           src={selected.image}
-          className="w-full h-full object-cover transition duration-300"
+          alt={product.name}
+          className="w-full object-cover transition duration-300"
+          style={{ height: "300px" }}
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/30 to-transparent" />
         <button
           onClick={() => router.back()}
-          className="absolute top-4 left-4 bg-black/50 backdrop-blur-sm text-white px-4 py-2 rounded-full text-sm flex items-center gap-2"
+          className="absolute top-20 left-4 flex items-center gap-1 text-white text-sm px-3 py-1.5 rounded-full"
+          style={{ background: "rgba(0,0,0,0.55)", backdropFilter: "blur(6px)" }}
         >
           ← Каталог
         </button>
       </div>
 
       {/* Контент */}
-      <div className="px-6 py-8 max-w-lg mx-auto flex flex-col gap-6">
-        <h1 className="font-title text-3xl">{product.name}</h1>
+      <div style={{ background: "#111", padding: "32px 24px 60px" }}>
+        <div style={{ maxWidth: "520px", margin: "0 auto" }}>
 
-        {/* Выбор цвета */}
-        <div>
-          <p className="text-xs text-white/50 mb-3">
-            Цвет: <span className="text-white">{selected.name}</span>
+          <h1 className="font-title text-white mb-6" style={{ fontSize: "2rem" }}>
+            {product.name}
+          </h1>
+
+          {/* Цвет */}
+          <p style={{ color: "rgba(255,255,255,0.45)", fontSize: "13px", marginBottom: "12px" }}>
+            Цвет: <span style={{ color: "#fff" }}>{selected.name}</span>
           </p>
-          <div className="flex gap-3 flex-wrap">
+          <div style={{ display: "flex", flexWrap: "wrap", gap: "10px", marginBottom: "32px" }}>
             {product.items.map((item, i) => (
               <button
                 key={i}
                 onClick={() => { setSelectedIndex(i); setQty(1); }}
-                className={`flex items-center gap-2 px-4 py-2 rounded-xl text-sm transition border ${
-                  selectedIndex === i
-                    ? "border-pink-500 bg-pink-500/20 text-white"
-                    : "border-white/20 bg-white/5 text-white/70 hover:bg-white/10"
-                }`}
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "8px",
+                  padding: "10px 18px",
+                  borderRadius: "12px",
+                  border: selectedIndex === i ? "2px solid #ec4899" : "2px solid rgba(255,255,255,0.15)",
+                  background: selectedIndex === i ? "rgba(236,72,153,0.15)" : "rgba(255,255,255,0.05)",
+                  color: "#fff",
+                  fontSize: "14px",
+                  cursor: "pointer",
+                }}
               >
-                <span
-                  className="w-4 h-4 rounded-full border border-white/30 flex-shrink-0"
-                  style={{ backgroundColor: colorMap[item.name] ?? "#888" }}
-                />
+                <span style={{
+                  width: "14px", height: "14px", borderRadius: "50%",
+                  background: colorMap[item.name] ?? "#888",
+                  border: "1px solid rgba(255,255,255,0.3)",
+                  flexShrink: 0,
+                }} />
                 {item.name}
               </button>
             ))}
           </div>
-        </div>
 
-        {/* Цена и количество */}
-        <div className="flex items-center justify-between">
-          <span className="text-3xl font-bold">{PRICE * qty} ₽</span>
-          <div className="flex items-center gap-4">
-            <button
-              onClick={() => setQty((q) => Math.max(1, q - 1))}
-              className="w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-xl"
-            >−</button>
-            <span className="w-6 text-center font-medium text-lg">{qty}</span>
-            <button
-              onClick={() => setQty((q) => q + 1)}
-              className="w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-xl"
-            >+</button>
+          {/* Цена + количество */}
+          <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "24px" }}>
+            <span style={{ color: "#fff", fontSize: "2rem", fontWeight: 700 }}>
+              {PRICE * qty} ₽
+            </span>
+            <div style={{ display: "flex", alignItems: "center", gap: "16px" }}>
+              {[["−", () => setQty(q => Math.max(1, q - 1))], ["+", () => setQty(q => q + 1)]].map(([label, fn], i) => (
+                <button key={i} onClick={fn as () => void}
+                  style={{
+                    width: "40px", height: "40px", borderRadius: "50%",
+                    background: "rgba(255,255,255,0.1)", color: "#fff",
+                    fontSize: "20px", border: "none", cursor: "pointer",
+                    display: "flex", alignItems: "center", justifyContent: "center",
+                  }}
+                >{label as string}</button>
+              ))}
+              <span style={{ color: "#fff", fontSize: "18px", fontWeight: 600, minWidth: "20px", textAlign: "center" }}>
+                {qty}
+              </span>
+            </div>
           </div>
-        </div>
 
-        {/* Кнопка */}
-        <button
-          onClick={handleAdd}
-          className={`w-full py-4 rounded-2xl font-title text-xl transition ${
-            added ? "bg-green-500" : "bg-pink-500 hover:bg-pink-400"
-          }`}
-        >
-          {added ? "Добавлено ✓" : "В корзину"}
-        </button>
+          {/* Кнопка в корзину */}
+          <button
+            onClick={handleAdd}
+            style={{
+              width: "100%",
+              padding: "16px",
+              borderRadius: "16px",
+              border: "none",
+              background: added ? "#22c55e" : "#ec4899",
+              color: "#fff",
+              fontSize: "18px",
+              fontWeight: 700,
+              cursor: "pointer",
+              transition: "background 0.2s",
+              fontFamily: "inherit",
+            }}
+          >
+            {added ? "Добавлено ✓" : "В корзину"}
+          </button>
+        </div>
       </div>
-    </main>
+    </div>
   );
 }
