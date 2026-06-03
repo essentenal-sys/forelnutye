@@ -74,7 +74,7 @@ export default function ProductPage({ params }: { params: Promise<{ slug: string
                   <img
                     src={item.image}
                     alt={item.name}
-                    style={{ width: "100%", aspectRatio: "1", objectFit: "cover" }}
+                    style={{ width: "100%", aspectRatio: "1", objectFit: "cover", objectPosition: "center 60%" }}
                   />
                 ) : (
                   <div style={{
