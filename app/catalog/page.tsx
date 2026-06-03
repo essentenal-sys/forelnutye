@@ -1,57 +1,47 @@
 import Link from "next/link";
 import { products, PRICE } from "@/app/lib/data";
 
-const colorMap: Record<string, string> = {
-  "Оранжевый": "#f97316",
-  "Зелёный": "#22c55e",
-  "Розовый": "#ec4899",
-  "Жёлтый": "#fbbf24",
-  "Белый": "#f1f5f9",
-  "Чёрный": "#1c1c1e",
-  "Красный": "#ef4444",
-  "Фиолетовый": "#a855f7",
-};
+const gradients = [
+  "linear-gradient(135deg, #1a0a2e 0%, #2d1b69 100%)",
+  "linear-gradient(135deg, #0f2027 0%, #203a43 50%, #24243e 100%)",
+  "linear-gradient(135deg, #1a0533 0%, #6b21a8 100%)",
+  "linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%)",
+];
 
 export default function CatalogPage() {
   return (
-    <main className="text-white pt-24 pb-20 px-6 max-w-6xl mx-auto">
-      <h1 className="font-title text-3xl md:text-5xl text-center mb-16">Каталог</h1>
+    <main className="text-white pt-24 pb-20 px-6 max-w-2xl mx-auto">
+      <h1 className="font-title text-3xl md:text-5xl text-center mb-12">Каталог</h1>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-        {products.map((product, i) => (
-          <Link
-            key={i}
-            href={`/catalog/${product.slug}`}
-            className="group relative rounded-2xl overflow-hidden cursor-pointer h-72 md:h-80 block"
-          >
-            <img
-              src={product.items[0].image}
-              className="absolute inset-0 w-full h-full object-cover transition duration-500 group-hover:scale-105"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
-            <div className="absolute top-4 right-4 bg-pink-500 text-white text-sm font-bold px-3 py-1 rounded-full">
-              {PRICE} ₽
-            </div>
-            <div className="absolute bottom-0 left-0 right-0 p-5">
-              <h3 className="font-title text-2xl mb-3">{product.name}</h3>
-              <div className="flex items-center justify-between">
-                <div className="flex gap-2">
-                  {product.items.map((item, j) => (
-                    <div
-                      key={j}
-                      title={item.name}
-                      className="w-5 h-5 rounded-full border-2 border-white/30"
-                      style={{ backgroundColor: colorMap[item.name] ?? "#888" }}
-                    />
-                  ))}
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        {products.map((product, i) => {
+          const coverImage = product.cover ?? product.items?.[0]?.image;
+          return (
+            <Link
+              key={i}
+              href={`/catalog/${product.slug}`}
+              className="group relative rounded-2xl overflow-hidden h-44 flex items-end block"
+              style={coverImage ? undefined : { background: gradients[i % gradients.length] }}
+            >
+              {coverImage && (
+                <img
+                  src={coverImage}
+                  className="absolute inset-0 w-full h-full object-cover transition duration-500 group-hover:scale-105"
+                />
+              )}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
+              <div className="relative p-5 w-full flex items-end justify-between">
+                <div>
+                  <h3 className="font-title text-2xl mb-1">{product.name}</h3>
+                  <span className="text-pink-400 font-bold text-sm">{PRICE} ₽</span>
                 </div>
-                <span className="text-white/60 text-sm group-hover:text-pink-400 transition">
+                <span className="text-white/50 text-sm group-hover:text-pink-400 transition">
                   Подробнее →
                 </span>
               </div>
-            </div>
-          </Link>
-        ))}
+            </Link>
+          );
+        })}
       </div>
     </main>
   );

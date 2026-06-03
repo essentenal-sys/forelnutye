@@ -5,6 +5,7 @@ export const products = [
   {
     slug: "dzhunior",
     name: "Джуниор",
+    cover: "/jcover.png",
     items: [
       { name: "Белый (J01)",               image: "/J01.jpg", color: "#ffffff" },
       { name: "Чёрный (J02)",              image: "/J02.jpg", color: "#1c1c1e" },
