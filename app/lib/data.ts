@@ -1,6 +1,9 @@
 export const PRICE = 250;
 
-export const products = [
+type ProductItem = { name: string; image?: string; color?: string };
+type Product = { slug: string; name: string; cover?: string; items?: ProductItem[] };
+
+export const products: Product[] = [
   { slug: "magot", name: "Магот" },
   {
     slug: "dzhunior",
