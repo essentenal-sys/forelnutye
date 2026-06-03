@@ -10,6 +10,9 @@ export default function ProductPage({ params }: { params: Promise<{ slug: string
   const router = useRouter();
   const { addToCart } = useCart();
   const product = products.find((p) => p.slug === slug);
+
+  const [pickingIndex, setPickingIndex] = useState<number | null>(null);
+  const [qtys, setQtys] = useState<Record<number, number>>({});
   const [addedIndex, setAddedIndex] = useState<number | null>(null);
 
   if (!product) {
@@ -22,8 +25,15 @@ export default function ProductPage({ params }: { params: Promise<{ slug: string
 
   const items = product.items ?? [];
 
+  const getQty = (i: number) => qtys[i] ?? 1;
+
+  const setQty = (i: number, v: number) =>
+    setQtys((prev) => ({ ...prev, [i]: Math.max(1, v) }));
+
   const handleAdd = (i: number) => {
-    addToCart(product.name, 1, items[i]?.name);
+    addToCart(product.name, getQty(i), items[i]?.name);
+    setPickingIndex(null);
+    setQtys((prev) => ({ ...prev, [i]: 1 }));
     setAddedIndex(i);
     setTimeout(() => setAddedIndex(null), 1500);
   };
@@ -93,28 +103,47 @@ export default function ProductPage({ params }: { params: Promise<{ slug: string
                   </div>
 
                   <span style={{ fontSize: "15px", fontWeight: 700, color: "#ec4899" }}>
-                    {PRICE} ₽
+                    {PRICE * getQty(i)} ₽
                   </span>
 
-                  <button
-                    onClick={() => handleAdd(i)}
-                    style={{
-                      width: "100%",
-                      padding: "10px",
-                      borderRadius: "10px",
-                      border: "none",
-                      background: addedIndex === i ? "#22c55e" : "#ec4899",
-                      color: "#fff",
-                      fontSize: "14px",
-                      fontWeight: 700,
-                      cursor: "pointer",
-                      transition: "background 0.2s",
-                      fontFamily: "inherit",
-                      marginTop: "auto",
-                    }}
-                  >
-                    {addedIndex === i ? "Добавлено ✓" : "В корзину"}
-                  </button>
+                  {addedIndex === i ? (
+                    <button disabled style={{
+                      width: "100%", padding: "10px", borderRadius: "10px",
+                      border: "none", background: "#22c55e", color: "#fff",
+                      fontSize: "14px", fontWeight: 700, fontFamily: "inherit",
+                    }}>
+                      Добавлено ✓
+                    </button>
+                  ) : pickingIndex === i ? (
+                    <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
+                      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: "8px" }}>
+                        <button
+                          onClick={() => setQty(i, getQty(i) - 1)}
+                          style={{ width: "36px", height: "36px", borderRadius: "50%", background: "rgba(255,255,255,0.1)", color: "#fff", fontSize: "18px", border: "none", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "inherit" }}
+                        >−</button>
+                        <span style={{ fontSize: "16px", fontWeight: 600, minWidth: "20px", textAlign: "center" }}>
+                          {getQty(i)}
+                        </span>
+                        <button
+                          onClick={() => setQty(i, getQty(i) + 1)}
+                          style={{ width: "36px", height: "36px", borderRadius: "50%", background: "rgba(255,255,255,0.1)", color: "#fff", fontSize: "18px", border: "none", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "inherit" }}
+                        >+</button>
+                      </div>
+                      <button
+                        onClick={() => handleAdd(i)}
+                        style={{ width: "100%", padding: "10px", borderRadius: "10px", border: "none", background: "#ec4899", color: "#fff", fontSize: "14px", fontWeight: 700, cursor: "pointer", fontFamily: "inherit" }}
+                      >
+                        В корзину →
+                      </button>
+                    </div>
+                  ) : (
+                    <button
+                      onClick={() => setPickingIndex(i)}
+                      style={{ width: "100%", padding: "10px", borderRadius: "10px", border: "none", background: "#ec4899", color: "#fff", fontSize: "14px", fontWeight: 700, cursor: "pointer", fontFamily: "inherit", marginTop: "auto" }}
+                    >
+                      В корзину
+                    </button>
+                  )}
                 </div>
               </div>
             ))}
