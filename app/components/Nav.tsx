@@ -14,7 +14,7 @@ export default function Nav() {
   const pathname = usePathname();
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-30 flex items-center justify-between px-6 py-4">
+    <nav className="fixed top-0 left-0 right-0 z-30 flex items-center justify-between px-6 py-4 bg-zinc-950/90 backdrop-blur-md border-b border-white/5">
       <div className="flex items-center gap-6">
         {links.map((link) => (
           <Link
