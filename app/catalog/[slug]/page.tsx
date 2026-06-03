@@ -57,11 +57,7 @@ export default function ProductPage({ params }: { params: Promise<{ slug: string
         {items.length === 0 ? (
           <p style={{ color: "rgba(255,255,255,0.4)" }}>Скоро появится в наличии</p>
         ) : (
-          <div style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))",
-            gap: "16px",
-          }}>
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
             {items.map((item, i) => (
               <div key={i} style={{
                 background: "rgba(255,255,255,0.04)",
