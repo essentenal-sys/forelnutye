@@ -37,13 +37,13 @@ export default function Nav() {
         </span>
         <div className="flex gap-2">
           <a href="https://vk.com/paidfishing" target="_blank">
-            <img src="/vk.svg" className="w-5" />
+            <img src="/vk.svg" width={20} height={20} className="w-5 h-5" />
           </a>
           <a href="https://t.me/+ePTez2ROSA44YzAy" target="_blank">
-            <img src="/tg.svg" className="w-5" />
+            <img src="/tg.svg" width={20} height={20} className="w-5 h-5" />
           </a>
           <a href="https://www.youtube.com/@paidfishing" target="_blank">
-            <img src="/yt.svg" className="w-5" />
+            <img src="/yt.svg" width={20} height={20} className="w-5 h-5" />
           </a>
         </div>
       </div>
